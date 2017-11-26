@@ -16,8 +16,8 @@ int dim2 = 0;                   // led control
 int dim = 128;                  // Dimming level (0-128)  0 = on, 128 = 0ff
 int pas = 8;                    // step for count;
 int freqStep = 65;              // This is the delay-per-brightness step in microseconds. It allows for 128 steps
-                                // If using 60 Hz grid frequency set this to 65
-
+// If using 60 Hz grid frequency set this to 65
+volatile int intCount = 0 ;
  
 void setup() {  // Begin setup
   Serial.begin(9600);   
@@ -34,6 +34,7 @@ void zero_cross_detect() {
   zero_cross = true;               // set flag for dim_check function that a zero cross has occured
   i=0;                             // stepcounter to 0.... as we start a new cycle
   digitalWrite(AC_pin, LOW);
+  intCount ++ ;
 }                                 
 
 // Turn on the TRIAC at the appropriate time
@@ -55,19 +56,38 @@ void dim_check() {
 }                                      
 
 void loop() {  
-  
+
+  /*
   if (dim<127)  
   {
     dim = dim + pas;
+  }
     if (dim>127) 
     {
       dim = dim - pas;
     }
-  }
+*/
+for( int j = 128 ; j > 00 ; j-- )
+{
+  dim = j ;
+  delay( 100 ) ;
+}
+delay( 1000 ) ;
+
+for( int j = 0 ; j < 128 ; j++ )
+{
+  dim = j ;
+  delay( 100 ) ;
+}
+
+ //dim = 89 ;
   Serial.print("dim=");
   Serial.print(dim);
+  Serial.print ( " count=" ) ;
+  //Serial.print ( intCount ) ;
+  Serial.print ( i ) ;
   Serial.print('\n');
-  delay (500);
+  delay (5000);
 
 }
 
