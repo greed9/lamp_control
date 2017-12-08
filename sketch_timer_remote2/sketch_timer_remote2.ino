@@ -1,5 +1,5 @@
 
-
+// Control Holiday lights with timing and motion sensing
 #include <DS3231.h>
 
 // Pointer to ISR function
@@ -200,7 +200,7 @@ TimerEvent xmasLightsON ( "17", "15", "Xmas Lights On!", activateRemote, ch1OnPi
 TimerEvent xmasLightsOFF ( "23", "58", "Xmas Lights Off!", activateRemote, ch1OffPin ) ;
 
 TimerEvent armLightToggle ( "00", "01", "Arm PIR sensing", activateTiming, 1 ) ; 
-TimerEvent disarmLightToggle ( "06", "00", "Disarm PIR sensing", activateTiming, 0 ) ; 
+TimerEvent disarmLightToggle ( "07", "00", "Disarm PIR sensing", activateTiming, 0 ) ; 
 DurationEvent xmasLightsBrighten ( "Brighten Up", 60000, activateRemote, ch3OnPin, 
   activateRemote, ch3OffPin ) ;
 
@@ -232,6 +232,7 @@ void setup()
 
   // debugging
   //activateTiming ( 1 ) ;
+  Serial.println ( "Starting timing" ) ;
 }
 
 // called to see if we need to turn on xmas lights based
