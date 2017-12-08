@@ -1,3 +1,5 @@
+
+
 #include <DS3231.h>
 
 // Pointer to ISR function
@@ -39,10 +41,6 @@ int pollAndWait ( int totalWait, int pollTime, PollFunc pFunc, byte pinNum )
     int result = ( *pFunc ) ( pinNum ) ;
     if ( result )
     {
-      Serial.print ( "Motion," ) ;
-      Serial.print(rtc.getDateStr());
-      Serial.print(",");
-      Serial.println ( rtc.getTimeStr ( )  ) ;
       return result ;
     }
     delay ( pollTime ) ;
@@ -277,6 +275,10 @@ void loop()
   int result = pollAndWait ( 10000, 500, checkPIRTripped, pirPin ) ;
   if ( result )
   {
+    Serial.print ( "Motion," ) ;
+    Serial.print(rtc.getDateStr());
+    Serial.print(",");
+    Serial.println ( rtc.getTimeStr ( )  ) ;
     xmasLightsBrighten.startRunning ( gTimingEnabled ) ;
   }
   
