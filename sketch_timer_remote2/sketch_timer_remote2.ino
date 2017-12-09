@@ -22,7 +22,7 @@ int gTimingEnabled = 0 ;
 // Turn on/off wireless remotes
 void activateRemote ( byte pin )
 {
-  for ( int i = 0 ; i < 3 ; i++ )
+  for ( int i = 0 ; i < 5 ; i++ )
   {
     digitalWrite ( pin, HIGH ) ;
     delay ( 1000 ) ;
@@ -35,16 +35,18 @@ int pollAndWait ( int totalWait, int pollTime, PollFunc pFunc, byte pinNum )
 {
   uint32_t startTime = millis ( ) ;
   uint32_t timeNow = millis ( ) ;
+  int retVal = 0 ;
 
   while ( timeNow - startTime < totalWait )
   {
     int result = ( *pFunc ) ( pinNum ) ;
     if ( result )
     {
-      return result ;
+      retVal = 1 ;
     }
     delay ( pollTime ) ;
     timeNow = millis ( ) ;
+    return retVal ;
   }
   return 0 ;
 }
@@ -231,6 +233,10 @@ void setup()
   activateRemote ( ch1OffPin ) ;
 
   // debugging
+  delay ( 10000 ) ;
+  activateRemote ( ch3OnPin ) ;
+  activateRemote ( ch1OnPin ) ;
+  
   //activateTiming ( 1 ) ;
   Serial.println ( "Starting timing" ) ;
 }
