@@ -43,12 +43,12 @@ int pollAndWait ( int totalWait, int pollTime, PollFunc pFunc, byte pinNum )
     if ( result )
     {
       retVal = 1 ;
+      break ;
     }
     delay ( pollTime ) ;
     timeNow = millis ( ) ;
-    return retVal ;
   }
-  return 0 ;
+  return retVal ;
 }
 
 // Generic event class
@@ -287,6 +287,7 @@ void loop()
     Serial.print(",");
     Serial.println ( rtc.getTimeStr ( )  ) ;
     xmasLightsBrighten.startRunning ( gTimingEnabled ) ;
+    delay ( 5000 ) ;
   }
   
 }
